@@ -1,0 +1,195 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+		name="viewport">
+	<title>Bengkel &mdash; DATU Motor</title>
+
+	<link rel="stylesheet" href="dist/modules/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="dist/modules/ionicons/css/ionicons.min.css">
+	<link rel="stylesheet" href="dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+	<link rel="stylesheet" href="dist/modules/summernote/summernote-lite.css">
+	<link rel="stylesheet" href="dist/modules/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="dist/css/demo.css">
+	<link rel="stylesheet" href="dist/css/style.css">
+</head>
+
+<body>
+	<script src="view/admin/sweetalert.min.js"></script>
+	<script src="view/admin/sweetalert.js"></script>
+	<div class="container">
+		<div class="col-sm-12 col-md-12 pt-3">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="section-header" class="text-center">Daftar Akun</h3>
+				</div>
+				<div class="card-body">
+					<form action="daftar.php" method="POST">
+						<div class="row">
+							<div class="col-lg-6">
+								<label for="" class="form-label">Nama</label>
+								<input type="text" name="nama" class="form-control mb-2" required>
+							</div>
+							<div class="col-lg-6">
+								<label for="Email" class="form-label">E-mail</label>
+								<input type="email" name="email" class="form-control mb-2" required>
+								<small>*Email akan digunakan untuk login !</small>
+							</div>
+
+							<div class="col-lg-6">
+								<label for="" class="form-label">Password</label>
+								<input type="password" name="password" class="form-control mb-2" required>
+							</div>
+							<div class="col-lg-6">
+								<label for="" class="form-label">Jenis Kelamin</label>
+								<select name="jk" class="form-control mb-2">
+									<option value="">- Pilih -</option>
+									<option value="Laki-laki">Laki-laki</option>
+									<option value="Perempuan">Perempuan</option>
+								</select>
+							</div>
+							<div class="col-lg-6">
+								<label for="" class="form-label">Alamat</label>
+								<input type="text" name="alamat" class="form-control mb-2" required>
+							</div>
+							<div class="col-lg-6">
+								<label for="" class="form-label">No Whatsapp</label>
+								<input type="text" name="no_wa" class="form-control mb-2" required>
+							</div>
+							<div class="col-lg-12">
+								<input type="submit" name="simpan" value="Daftar" class="btn btn-success">
+								<a href="index.php" class="btn btn-primary">Kembali</a>
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+
+
+			<?php
+
+			if (isset($_POST['simpan'])) {
+
+				include "koneksi.php";
+				$email = $_POST['email'];
+				$nama = $_POST['nama'];
+				$password = md5($_POST['password']);
+				$jk = $_POST['jk'];
+				$alamat = $_POST['alamat'];
+				$no_wa = substr($_POST['no_wa'], 1, 11);
+				$otp = rand(1000, 5000);
+				$aktif = 'tidak';
+
+				// Cek apakah nomor WA sudah terdaftar
+				$check_query = mysqli_query($conn, "SELECT no_wa FROM pelanggan WHERE no_wa = '$no_wa'");
+
+				if (mysqli_num_rows($check_query) > 0) {
+					echo "<script type='text/javascript'>
+                setTimeout(function() {  
+                    swal({
+                        title: 'Gagal',
+                        text: 'Nomor WhatsApp sudah terdaftar!',
+                        icon: 'error',
+                        timer: 2000,
+                        showConfirmButton: true
+                    });  
+                }, 10); 
+                window.setTimeout(function(){ 
+                    window.history.back();
+                }, 2000); 
+              </script>";
+					exit;
+				}
+
+				$simpan = mysqli_query($conn, "INSERT INTO pelanggan (nama, email, password, jk, alamat,
+            no_wa, kode_otp, aktif) VALUES ('$nama', '$email', '$password', '$jk', '$alamat', '$no_wa', '$otp',
+            '$aktif')");
+
+				$phone = '62' . $no_wa;
+				$pesan = 'Kode OTP anda *' . $otp . '*. Masukkan kode berikut setelah anda mendaftar akun. Tertanda : *Datu
+            Motor*';
+				$token = "93RgRMXwG48TSs7uLJrN";
+
+				$curl = curl_init();
+
+				curl_setopt_array($curl, array(
+					CURLOPT_URL => 'https://api.fonnte.com/send',
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_ENCODING => '',
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_TIMEOUT => 0,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => 'POST',
+					CURLOPT_POSTFIELDS => array(
+						'target' => $phone,
+						'message' => $pesan,
+
+					),
+					CURLOPT_HTTPHEADER => array(
+						"Authorization: $token"
+					),
+					CURLOPT_SSL_VERIFYPEER => false, // Nonaktifkan verifikasi SSL
+
+				));
+
+				$response = curl_exec($curl);
+
+				// if ($response === false) {
+				// 	echo 'Curl error: ' . curl_error($curl);
+				// } else {
+				// 	echo 'Response: ' . $response;
+				// }
+
+				curl_close($curl);
+
+				if ($simpan === TRUE) {
+					echo "<script type='text/javascript'>
+            			setTimeout(function () {  
+            			swal({
+            			title: 'Sukses',
+            			text:  'Registrasi berhasil, Periksa Kode OTP di Whatsaap anda !',
+            			icon: 'success',
+            			timer: 2000,
+            			showConfirmButton: true
+            			});  
+            			},10); 
+            			window.setTimeout(function(){ 
+            			window.location.replace('otp.php?id=$no_wa');
+            			} ,2000); 
+            		
+            </script>";
+				} else {
+					echo "<script type='text/javascript'>
+            			setTimeout(function () {  
+            			swal({
+            			title: 'Failed',
+            			text:  'Registrasi gagal !',
+            			icon: 'error',
+            			timer: 2000,
+            			showConfirmButton: true
+            			});  
+            			},10); 
+            			window.setTimeout(function(){ 
+            			window.location.replace('daftar.php');
+            			} ,3000); 
+            	
+            </script>";
+				}
+			}
+			?>
+
+		</div>
+	</div>
+
+</html>
+<style>
+	.form-label {
+		font-weight: bold;
+	}
+</style>

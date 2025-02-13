@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Datu Motor
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .hero {
+            position: relative;
+            background: url('img/home.JPEG') no-repeat center center/cover;
+            height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: white;
+            background: #ff6600;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .hero .btn:hover {
+            background: #e65c00;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-success px-5 fixed-top text-white shadow">
+        <div class="container-fluid">
+            <h1 class="display-6">DATU MOTOR SERVICE</h1>
+        </div>
+        <ul class="nav nav-underline justify-content-end me-5">
+            <li class="navbar nav-item dropdown">
+                <a class="nav-link nav-underline dropdown-toggle fs-5" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: white;">Masuk</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="login.php">Login</a></li>
+                    <li><a class="dropdown-item" href="daftar.php">Daftar</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="login_admin.php">Admin</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>DATU MOTOR SERVICE</h1>
+            <p>Jl. Pagang Raya-Siteba No.20 A, Kurao Pagang, Kec. Nanggalo, Kota Padang, Sumatera Barat</p>
+        </div>
+    </section>
+
+    <div class="p-5 mb-4 text-bg-transparent" style="margin-top: 10rem;">
+        <div class="container-fluid py-5">
+            <div class="row" style="margin: 0 10rem 0 10rem;">
+                <div class="col-md-6 text-start">
+                    <h1 class="display-5 fw-bold">Service/Reparasi Mesin</h1>
+                    <p class="fs-4">Ganti oli, ban, balance, nitrogen, serivce dan lainnya</p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="img/mechanic.png" class="rounded" alt="" width="300px" height="300px">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 mb-4 text-bg-success" style="margin-top: 10rem;">
+        <div class="container-fluid py-5">
+            <div class="row" style="margin: 0 10rem 0 10rem;">
+                <div class="col-md-6 text-center">
+                    <img src="img/repair-shop.png" class="rounded" alt="" width="300px" height="300px" style="color: #1a8754;">
+                </div>
+                <div class="col-md-6 text-end">
+                    <h1 class="display-5 fw-bold">Bongkar Mesin</h1>
+                    <p class="fs-4">Pergantian komponen dalam mesin dimana kondisi mesin tidak hidup ataupun tidak
+                        bekerja optimal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 mb-4 text-bg-transparent" style="margin-top: 10rem;">
+        <div class="container-fluid py-5">
+            <div class="row" style="margin: 0 10rem 0 10rem;">
+                <div class="col-md-6 text-start">
+                    <h1 class="display-5 fw-bold">Tune Up</h1>
+                    <p class="fs-4">Meningkatkan Performa mesin mulai dari pengapian konsumsi bahan bakar dan lainnya
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="img/up-arrow.png" class="rounded" alt="" width="300px" height="300px">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 text-bg-success" style="margin-top: 10rem;">
+        <div class="container-fluid py-5">
+            <div class="row" style="margin: 0 10rem 0 10rem;">
+                <div class="col-md-6 text-center">
+                    <img src="img/oil-bottle.png" class="rounded" alt="" width="300px" height="300px">
+                </div>
+                <div class="col-md-6 text-end">
+                    <h1 class="display-5 fw-bold">Ganti Oli</h1>
+                    <p class="fs-4">Aktivitas rutin yang sebaiknya memang dilakukan setelah mobil menempuh jarak
+                        tertentu.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
